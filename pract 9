@@ -1,0 +1,125 @@
+using System;
+using System.Collections.Generic;
+
+namespace LinkedListExample
+{
+    public class StringLinkedList
+    {
+        private class Node
+        {
+            public string Value { get; set; }
+            public Node Next { get; set; }
+
+            public Node(string value)
+            {
+                Value = value;
+                Next = null;
+            }
+        }
+
+        private Node _head;
+        private int _size;
+
+        public StringLinkedList()
+        {
+            _head = null;
+            _size = 0;
+        }
+
+        public void Add(string value)
+        {
+            var newNode = new Node(value);
+            if (_head == null)
+            {
+                _head = newNode;
+            }
+            else
+            {
+                var current = _head;
+                while (current.Next != null)
+                {
+                    current = current.Next;
+                }
+                current.Next = newNode;
+            }
+            _size++;
+        }
+
+        public string Get(int index)
+        {
+            if (index < 0 || index >= _size)
+            {
+                throw new IndexOutOfRangeException("Index out of range.");
+            }
+            var current = _head;
+            for (int i = 0; i < index; i++)
+            {
+                current = current.Next;
+            }
+            return current.Value;
+        }
+
+        public void Set(int index, string value)
+        {
+            if (index < 0 || index >= _size)
+            {
+                throw new IndexOutOfRangeException("Index out of range.");
+            }
+            var current = _head;
+            for (int i = 0; i < index; i++)
+            {
+                current = current.Next;
+            }
+            current.Value = value;
+        }
+
+        public void Delete(int index)
+        {
+            if (index < 0 || index >= _size)
+            {
+                throw new IndexOutOfRangeException("Index out of range.");
+            }
+            if (index == 0)
+            {
+                _head = _head.Next;
+            }
+            else
+            {
+                var current = _head;
+                for (int i = 0; i < index - 1; i++)
+                {
+                    current = current.Next;
+                }
+                current.Next = current.Next.Next;
+            }
+            _size--;
+        }
+
+        public int Size()
+        {
+            return _size;
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var linkedList = new StringLinkedList();
+            linkedList.Add("Apple");
+            linkedList.Add("Banana");
+            linkedList.Add("Cherry");
+
+            Console.WriteLine($"Size: {linkedList.Size()}");
+            Console.WriteLine($"Element at index 1: {linkedList.Get(1)}");
+
+            linkedList.Set(0, "Apricot");
+            Console.WriteLine($"Element at index 0 after Set: {linkedList.Get(0)}");
+
+            linkedList.Delete(2);
+            Console.WriteLine($"Size after Delete: {linkedList.Size()}");
+
+            Console.ReadLine();
+        }
+    }
+}
