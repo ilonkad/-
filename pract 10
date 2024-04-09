@@ -1,0 +1,30 @@
+using System;
+using System.Text.RegularExpressions;
+
+namespace MobileNumberValidator
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Введіть мобільний номер:");
+            string input = Console.ReadLine();
+
+            if (IsValidMobileNumber(input))
+            {
+                Console.WriteLine("Номер є валідним.");
+            }
+            else
+            {
+                Console.WriteLine("Номер не є валідним.");
+            }
+        }
+
+        static bool IsValidMobileNumber(string number)
+        {
+         
+            string pattern = @"^\+38\s?\d{3}\s?\d{3}(-|\s)?\d{2}(-|\s)?\d{2}$";
+            return Regex.IsMatch(number, pattern);
+        }
+    }
+}
